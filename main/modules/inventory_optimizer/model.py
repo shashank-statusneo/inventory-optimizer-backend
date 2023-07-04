@@ -14,7 +14,9 @@ class MasterData(BaseModel):
     file_ext = db.Column(db.String(50))
     file_object = db.Column(BLOB)
     user_id = db.Column(db.ForeignKey("auth_user.id"))
-    user = db.relationship("AuthUser", backref=db.backref("master_data", lazy=True))
+    user = db.relationship(
+        "AuthUser", backref=db.backref("master_data", lazy=True)
+    )
 
 
 class DemandForecast(BaseModel):
@@ -25,7 +27,9 @@ class DemandForecast(BaseModel):
     __tablename__ = "demand_forecast"
 
     master_id = db.Column(db.ForeignKey("master_data.id"))
-    master_demand_forecast = db.relationship("MasterData", backref=db.backref("master_demand_forecast", lazy=True))
+    master_demand_forecast = db.relationship(
+        "MasterData", backref=db.backref("master_demand_forecast", lazy=True)
+    )
     weekend = db.Column(db.DateTime, nullable=False)
     month_no = db.Column(db.Integer, nullable=False)
     month_week = db.Column(db.Integer, nullable=False)
@@ -33,7 +37,9 @@ class DemandForecast(BaseModel):
     site = db.Column(db.String(50), nullable=False)
     predict = db.Column(db.Integer, nullable=False)
     user_id = db.Column(db.ForeignKey("auth_user.id"))
-    user = db.relationship("AuthUser", backref=db.backref("demand_forecast", lazy=True))
+    user = db.relationship(
+        "AuthUser", backref=db.backref("demand_forecast", lazy=True)
+    )
 
 
 class Vendor(BaseModel):
@@ -44,7 +50,9 @@ class Vendor(BaseModel):
     __tablename__ = "vendor"
 
     master_id = db.Column(db.ForeignKey("master_data.id"))
-    master_vendor = db.relationship("MasterData", backref=db.backref("master_vendor", lazy=True))
+    master_vendor = db.relationship(
+        "MasterData", backref=db.backref("master_vendor", lazy=True)
+    )
     vendor_id = db.Column(db.String(50), nullable=False)
     lead_time_avg = db.Column(db.Float, nullable=False)
     lead_time_std_dev = db.Column(db.Float, nullable=False)
