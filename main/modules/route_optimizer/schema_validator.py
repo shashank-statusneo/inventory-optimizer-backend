@@ -20,3 +20,4 @@ class RouteUploadSchema(Schema):
         ),
         required=True,
     )
+    user_id = fields.Integer(required=False)

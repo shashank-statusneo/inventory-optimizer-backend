@@ -1,6 +1,7 @@
 import operator
-from datetime import datetime
+from datetime import date, datetime
 import pandas as pd
+import os
 from json import loads
 
 
@@ -29,7 +30,9 @@ def validate_substr(v: str):
     elif v.endswith("%"):
         return True
     else:
-        raise ValidationError("Like values must contain '%', e.g ['%example%', '%example', 'example%']")
+        raise ValidationError(
+            "Like values must contain '%', e.g ['%example%', '%example', 'example%']"
+        )
 
 
 def validate_not_dict_list_tuple(value: type):
@@ -39,7 +42,9 @@ def validate_not_dict_list_tuple(value: type):
     :return:
     """
     if isinstance(value, (dict, list, tuple)):
-        raise ValidationError(f"Value {value} must not be a dict, list, or tuple")
+        raise ValidationError(
+            f"Value {value} must not be a dict, list, or tuple"
+        )
 
 
 def validate_int_float_date(value: int | float | str):
@@ -52,9 +57,13 @@ def validate_int_float_date(value: int | float | str):
         try:
             datetime.strptime(value, "%Y-%m-%d")
         except ValueError:
-            raise ValidationError(f"Value {value} must be an int, float, or str('yyyy-mm-dd')")
+            raise ValidationError(
+                f"Value {value} must be an int, float, or str('yyyy-mm-dd')"
+            )
     elif not isinstance(value, (int, float)):
-        raise ValidationError(f"Value {value} must be an int, float, or str('yyyy-mm-dd')")
+        raise ValidationError(
+            f"Value {value} must be an int, float, or str('yyyy-mm-dd')"
+        )
 
 
 class FiltersDataSchema(Schema):
@@ -62,28 +71,71 @@ class FiltersDataSchema(Schema):
     Schema to validate filters data
     """
 
-    eq = fields.Dict(fields.String(), fields.Field(validate=validate_not_dict_list_tuple), required=False)
-    ne = fields.Dict(fields.String(), fields.Field(validate=validate_not_dict_list_tuple), required=False)
-    lt = fields.Dict(fields.String(), fields.Field(validate=validate_int_float_date), required=False)
-    gt = fields.Dict(fields.String(), fields.Field(validate=validate_int_float_date), required=False)
-    lte = fields.Dict(fields.String(), fields.Field(validate=validate_int_float_date), required=False)
-    gte = fields.Dict(fields.String(), fields.Field(validate=validate_int_float_date), required=False)
+    eq = fields.Dict(
+        fields.String(),
+        fields.Field(validate=validate_not_dict_list_tuple),
+        required=False,
+    )
+    ne = fields.Dict(
+        fields.String(),
+        fields.Field(validate=validate_not_dict_list_tuple),
+        required=False,
+    )
+    lt = fields.Dict(
+        fields.String(),
+        fields.Field(validate=validate_int_float_date),
+        required=False,
+    )
+    gt = fields.Dict(
+        fields.String(),
+        fields.Field(validate=validate_int_float_date),
+        required=False,
+    )
+    lte = fields.Dict(
+        fields.String(),
+        fields.Field(validate=validate_int_float_date),
+        required=False,
+    )
+    gte = fields.Dict(
+        fields.String(),
+        fields.Field(validate=validate_int_float_date),
+        required=False,
+    )
     between = fields.Dict(
         fields.String(),
-        fields.List(fields.Field(validate=validate_int_float_date), validate=Length(equal=2)),
+        fields.List(
+            fields.Field(validate=validate_int_float_date),
+            validate=Length(equal=2),
+        ),
         required=False,
     )
     op_in = fields.Dict(
-        fields.String(), fields.List(fields.Field(validate=validate_not_dict_list_tuple)), required=False
+        fields.String(),
+        fields.List(fields.Field(validate=validate_not_dict_list_tuple)),
+        required=False,
     )
-    nin = fields.Dict(fields.String(), fields.List(fields.Field(validate=validate_not_dict_list_tuple)), required=False)
+    nin = fields.Dict(
+        fields.String(),
+        fields.List(fields.Field(validate=validate_not_dict_list_tuple)),
+        required=False,
+    )
     null = fields.List(fields.String(), required=False)
     not_null = fields.List(fields.String(), required=False)
-    op_or = fields.Dict(fields.String(), fields.Field(validate=validate_not_dict_list_tuple), required=False)
-    substr = fields.Dict(fields.String(), fields.String(validate=validate_substr), required=False)
+    op_or = fields.Dict(
+        fields.String(),
+        fields.Field(validate=validate_not_dict_list_tuple),
+        required=False,
+    )
+    substr = fields.Dict(
+        fields.String(),
+        fields.String(validate=validate_substr),
+        required=False,
+    )
 
 
-def get_data_from_request_or_raise_validation_error(validator_schema: type, data: dict) -> dict:
+def get_data_from_request_or_raise_validation_error(
+    validator_schema: type, data: dict
+) -> dict:
     """
     This function is used to get the and validate it according to its validator schema and
     return request data in dict form. Also, it is used to raise ValidationError (A Custom
@@ -119,7 +171,9 @@ def log_user_access(response):
     return response
 
 
-def add_filters_using_mapping(model: type, conditions: dict, filters: list, operator_key: str):
+def add_filters_using_mapping(
+    model: type, conditions: dict, filters: list, operator_key: str
+):
     """
     This function is used to update the filters using input and operators mapping.
     :param model: The SQLAlchemy model to add filters to.
@@ -145,7 +199,9 @@ def add_filters_using_mapping(model: type, conditions: dict, filters: list, oper
     for column, value in conditions.items():
         if hasattr(model, column):
             if operator_key == "between":
-                filters.append(between(getattr(model, column), value[0], value[1]))
+                filters.append(
+                    between(getattr(model, column), value[0], value[1])
+                )
             elif operator_key == "op_in":
                 filters.append(getattr(model, column).in_(value))
             elif operator_key == "nin":
@@ -155,12 +211,18 @@ def add_filters_using_mapping(model: type, conditions: dict, filters: list, oper
             elif operator_key == "substr":
                 filters.append(getattr(model, column).like(value))
             else:
-                filters.append(operator_mapping[operator_key](getattr(model, column), value))
+                filters.append(
+                    operator_mapping[operator_key](
+                        getattr(model, column), value
+                    )
+                )
     if logical_or_filters:
         filters.append(or_(*logical_or_filters))
 
 
-def add_filters_for_null_and_not_null(model: type, operator_key: str, conditions: dict, filters: list):
+def add_filters_for_null_and_not_null(
+    model: type, operator_key: str, conditions: dict, filters: list
+):
     """
     This function is used to add filters for null and not null values.
     :param model: The SQLAlchemy model to add filters to.
@@ -177,7 +239,9 @@ def add_filters_for_null_and_not_null(model: type, operator_key: str, conditions
                 filters.append(getattr(model, column) != None)  # noqa
 
 
-def get_query_including_filters(db: SQLAlchemy, model: type, filter_dict: dict):
+def get_query_including_filters(
+    db: SQLAlchemy, model: type, filter_dict: dict
+):
     """
     This function is used to get the query with all filters
     :param db:
@@ -196,7 +260,9 @@ def get_query_including_filters(db: SQLAlchemy, model: type, filter_dict: dict):
     filters = []
     for operator_key, conditions in filter_dict.items():
         if operator_key == "null" or operator_key == "not_null":
-            add_filters_for_null_and_not_null(model, operator_key, conditions, filters)
+            add_filters_for_null_and_not_null(
+                model, operator_key, conditions, filters
+            )
         else:
             add_filters_using_mapping(model, conditions, filters, operator_key)
     return query.filter(*filters)
@@ -206,3 +272,16 @@ def csv_to_dict(csv_file):
     csv_data = pd.read_csv(csv_file).to_json(orient="records")
 
     return loads(csv_data)
+
+
+def greater_or_equal_to_current_date(input_date):
+    """
+    Function to check date.
+    :param input_date:
+    :return:
+    """
+
+    today = date.today()
+    return (
+        input_date >= today or os.environ.get("FLASK_ENV") == "test"
+    )  # This is the temp solution

@@ -1,5 +1,6 @@
 from flask import jsonify, make_response, request
-from flask_jwt_extended import jwt_required
+
+# from flask_jwt_extended import jwt_required
 from flask_restx import Namespace
 from flask_restx import Resource
 
@@ -12,7 +13,8 @@ from main.modules.inventory_optimizer.controller import (
 from main.modules.inventory_optimizer.schema_validator import (
     InventoryUploadSchema,
 )
-from main.modules.auth.controller import AuthUserController
+
+# from main.modules.auth.controller import AuthUserController
 from main.utils import (
     get_data_from_request_or_raise_validation_error,
     csv_to_dict,
@@ -32,14 +34,14 @@ class AlgorithmMockApi(Resource):
 
 
 class InventoryUploadApi(Resource):
-    method_decorators = [jwt_required()]
+    # method_decorators = [jwt_required()]
 
     def post(self):
         """
         This function is used to add a new inventory to the database.
         :return:
         """
-        auth_user = AuthUserController.get_current_auth_user()
+        # auth_user = AuthUserController.get_current_auth_user()
 
         request_data = get_data_from_request_or_raise_validation_error(
             InventoryUploadSchema, request.form
@@ -58,14 +60,14 @@ class InventoryUploadApi(Resource):
             "file_ext": raw_file.mimetype,
         }
 
-        master_data.update({"user_id": auth_user.id})
+        master_data.update({"created_by": request_data.get("user_id")})
 
         master_id = MasterDataController.add_master_data(master_data)
 
         upload_data = csv_to_dict(csv_file=raw_file)
         for item in upload_data:
             item["master_id"] = master_id
-            item["user_id"] = auth_user.id
+            item["created_by"] = request_data.get("user_id")
 
         match request_data.get("file_type"):
             case "demand_forecast":

@@ -9,6 +9,8 @@ class BaseModel(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, default=None, onupdate=db.func.now())
+    created_by = db.Column(db.Integer, default=None)
+    updated_by = db.Column(db.Integer, default=None)
 
     @classmethod
     def bulkcreate(cls, data: list):

@@ -13,10 +13,10 @@ class MasterData(BaseModel):
     file_type = db.Column(db.String(50), nullable=False)
     file_ext = db.Column(db.String(50))
     file_object = db.Column(BLOB)
-    user_id = db.Column(db.ForeignKey("auth_user.id"))
-    user = db.relationship(
-        "AuthUser", backref=db.backref("master_data", lazy=True)
-    )
+    # user_id = db.Column(db.ForeignKey("auth_user.id"))
+    # user = db.relationship(
+    #     "AuthUser", backref=db.backref("master_data", lazy=True)
+    # )
 
 
 class DemandForecast(BaseModel):
@@ -36,10 +36,10 @@ class DemandForecast(BaseModel):
     article = db.Column(db.String(50), nullable=False)
     site = db.Column(db.String(50), nullable=False)
     predict = db.Column(db.Integer, nullable=False)
-    user_id = db.Column(db.ForeignKey("auth_user.id"))
-    user = db.relationship(
-        "AuthUser", backref=db.backref("demand_forecast", lazy=True)
-    )
+    # user_id = db.Column(db.ForeignKey("auth_user.id"))
+    # user = db.relationship(
+    #     "AuthUser", backref=db.backref("demand_forecast", lazy=True)
+    # )
 
 
 class Vendor(BaseModel):
@@ -59,5 +59,5 @@ class Vendor(BaseModel):
     price = db.Column(db.Float, nullable=False)
     order_cost = db.Column(db.Float, nullable=False)
     stockout_cost = db.Column(db.Float, nullable=False)
-    user_id = db.Column(db.ForeignKey("auth_user.id"))
-    user = db.relationship("AuthUser", backref=db.backref("vendor", lazy=True))
+    # user_id = db.Column(db.ForeignKey("auth_user.id"))
+    # user = db.relationship("AuthUser", backref=db.backref("vendor", lazy=True))

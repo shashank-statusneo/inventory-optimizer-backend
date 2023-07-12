@@ -1,5 +1,6 @@
 from flask import jsonify, make_response, request
-from flask_jwt_extended import jwt_required
+
+# from flask_jwt_extended import jwt_required
 from flask_restx import Namespace
 from flask_restx import Resource
 
@@ -8,7 +9,7 @@ from main.modules.route_optimizer.controller import DistanceMatrixController
 
 from main.modules.route_optimizer.schema_validator import RouteUploadSchema
 
-from main.modules.auth.controller import AuthUserController
+# from main.modules.auth.controller import AuthUserController
 from main.utils import (
     get_data_from_request_or_raise_validation_error,
     csv_to_dict,
@@ -37,8 +38,7 @@ class RouteUploadApi(Resource):
 
         upload_data = csv_to_dict(csv_file=raw_file)
         for item in upload_data:
-            item["user_id"] = 1
-            # item["user_id"] = auth_user.id
+            item["created_by"] = request_data.get("user_id")
 
         match request_data.get("file_type"):
             case "distance_matrix":

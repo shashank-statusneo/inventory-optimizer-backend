@@ -14,10 +14,10 @@ class DistanceMatrix(BaseModel):
     end_node = db.Column(db.String(50), nullable=False)
     distance = db.Column(db.Integer, nullable=False)
     time = db.Column(db.Integer, nullable=False)
-    user_id = db.Column(db.ForeignKey("auth_user.id"))
-    user = db.relationship(
-        "AuthUser", backref=db.backref("distance_matrix", lazy=True)
-    )
+    # user_id = db.Column(db.ForeignKey("auth_user.id"))
+    # user = db.relationship(
+    #     "AuthUser", backref=db.backref("distance_matrix", lazy=True)
+    # )
 
 
 class SourceCoordinates(BaseModel):
@@ -31,10 +31,10 @@ class SourceCoordinates(BaseModel):
     hub_id = db.Column(db.String(50), nullable=False)
     hub_latitude = db.Column(db.String(50), nullable=False)
     hub_longitude = db.Column(db.String(50), nullable=False)
-    user_id = db.Column(db.ForeignKey("auth_user.id"))
-    user = db.relationship(
-        "AuthUser", backref=db.backref("source_coordinates", lazy=True)
-    )
+    # user_id = db.Column(db.ForeignKey("auth_user.id"))
+    # user = db.relationship(
+    #     "AuthUser", backref=db.backref("source_coordinates", lazy=True)
+    # )
 
 
 class DestinationCoordinates(BaseModel):
@@ -48,10 +48,10 @@ class DestinationCoordinates(BaseModel):
     destination_id = db.Column(db.String(50), nullable=False)
     destination_latitude = db.Column(db.String(50), nullable=False)
     destination_longitude = db.Column(db.String(50), nullable=False)
-    user_id = db.Column(db.ForeignKey("auth_user.id"))
-    user = db.relationship(
-        "AuthUser", backref=db.backref("destination_coordinates", lazy=True)
-    )
+    # user_id = db.Column(db.ForeignKey("auth_user.id"))
+    # user = db.relationship(
+    #     "AuthUser", backref=db.backref("destination_coordinates", lazy=True)
+    # )
 
 
 class FleetDetails(BaseModel):
@@ -68,10 +68,10 @@ class FleetDetails(BaseModel):
     capacity_kg = db.Column(db.Float(), nullable=False)
     avg_speed_kmph = db.Column(db.Float(), nullable=False)
     characteristics = db.Column(db.String(50))
-    user_id = db.Column(db.ForeignKey("auth_user.id"))
-    user = db.relationship(
-        "AuthUser", backref=db.backref("fleet_details", lazy=True)
-    )
+    # user_id = db.Column(db.ForeignKey("auth_user.id"))
+    # user = db.relationship(
+    #     "AuthUser", backref=db.backref("fleet_details", lazy=True)
+    # )
 
 
 class VehicleAvailability(BaseModel):
@@ -84,10 +84,10 @@ class VehicleAvailability(BaseModel):
     vehicle_id = db.Column(db.String(50), nullable=False)
     availability_start_time = db.Column(db.DateTime(), nullable=False)
     availability_end_time = db.Column(db.DateTime(), nullable=False)
-    user_id = db.Column(db.ForeignKey("auth_user.id"))
-    user = db.relationship(
-        "AuthUser", backref=db.backref("vehicle_availability", lazy=True)
-    )
+    # user_id = db.Column(db.ForeignKey("auth_user.id"))
+    # user = db.relationship(
+    #     "AuthUser", backref=db.backref("vehicle_availability", lazy=True)
+    # )
 
 
 class OrderDetails(BaseModel):
@@ -104,7 +104,7 @@ class OrderDetails(BaseModel):
     delivery_slot_start_time = db.Column(db.DateTime(), nullable=False)
     delivery_slot_end_time = db.Column(db.DateTime(), nullable=False)
     special_vehicle_requirements = db.Column(db.String(50), nullable=False)
-    user_id = db.Column(db.ForeignKey("auth_user.id"))
-    user = db.relationship(
-        "AuthUser", backref=db.backref("order_details", lazy=True)
-    )
+    # user_id = db.Column(db.ForeignKey("auth_user.id"))
+    # user = db.relationship(
+    #     "AuthUser", backref=db.backref("order_details", lazy=True)
+    # )
