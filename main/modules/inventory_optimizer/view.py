@@ -2,6 +2,7 @@ from flask import jsonify, make_response, request
 
 from flask_restx import Namespace
 from flask_restx import Resource
+from json import dumps
 
 
 from main.modules.inventory_optimizer.controller import (
@@ -47,9 +48,10 @@ class InventoryUploadApi(Resource):
 
         raw_file = request_files.get("file")
 
+        upload_data = csv_to_dict(csv_file=raw_file)
+
         master_data = {
-            # TODO: add raw file here
-            # "file_object": raw_file,
+            "file_object": dumps(upload_data).encode(),
             "file_name": raw_file.filename,
             "file_type": request_data.get("file_type"),
             "file_ext": raw_file.mimetype,
@@ -59,7 +61,6 @@ class InventoryUploadApi(Resource):
 
         master_id = MasterDataController.add_master_data(master_data)
 
-        upload_data = csv_to_dict(csv_file=raw_file)
         for item in upload_data:
             item["master_id"] = master_id
             item["created_by"] = request_data.get("user_id")
