@@ -3,8 +3,7 @@ import os
 
 import pytest
 
-from main import get_app
-from main.db import db
+from main import db, get_app
 
 
 @pytest.fixture(scope="class")

@@ -25,7 +25,6 @@ def get_app(env=None, config=None):
     CORS(app)
     api.init_app(app)
     db.init_app(app)
-    # jwt.init_app(app)
     Migrate(app, db)
 
     # register all custom exceptions

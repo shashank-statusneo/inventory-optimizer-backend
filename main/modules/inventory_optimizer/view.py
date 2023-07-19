@@ -1,6 +1,5 @@
 from flask import jsonify, make_response, request
 
-# from flask_jwt_extended import jwt_required
 from flask_restx import Namespace
 from flask_restx import Resource
 
@@ -14,7 +13,6 @@ from main.modules.inventory_optimizer.schema_validator import (
     InventoryUploadSchema,
 )
 
-# from main.modules.auth.controller import AuthUserController
 from main.utils import (
     get_data_from_request_or_raise_validation_error,
     csv_to_dict,
@@ -34,14 +32,11 @@ class AlgorithmMockApi(Resource):
 
 
 class InventoryUploadApi(Resource):
-    # method_decorators = [jwt_required()]
-
     def post(self):
         """
         This function is used to add a new inventory to the database.
         :return:
         """
-        # auth_user = AuthUserController.get_current_auth_user()
 
         request_data = get_data_from_request_or_raise_validation_error(
             InventoryUploadSchema, request.form

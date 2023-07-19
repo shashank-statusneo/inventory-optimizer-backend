@@ -31,6 +31,7 @@ class WarehouseController:
             try:
                 new_warehouse = Warehouse.create(warehouse)
             except Exception as e:
+                print(e)
                 warehouse["error"] = str(e)
                 error_data.append(warehouse)
                 Warehouse.rollback()
