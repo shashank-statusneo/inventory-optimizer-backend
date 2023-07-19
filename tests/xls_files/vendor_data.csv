@@ -1,0 +1,2 @@
+vendor_id,lead_time_avg,lead_time_std_dev,price,order_cost,stockout_cost
+RIL3928,5,2,1000,100,400
