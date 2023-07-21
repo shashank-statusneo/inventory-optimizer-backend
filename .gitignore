@@ -2,6 +2,7 @@
 /shelf/
 **xml
 */venv/*
+venv
 /logs/
 /instance/
 *.pyc
