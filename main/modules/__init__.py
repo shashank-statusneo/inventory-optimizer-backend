@@ -15,5 +15,4 @@ api.add_namespace(wmp_namespace)
 api.add_namespace(inventory_namespace)
 api.add_namespace(route_namespace)
 
-
 api.add_namespace(algorithm_mock_namespace)
