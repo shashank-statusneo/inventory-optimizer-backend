@@ -5,7 +5,7 @@ import yaml
 
 # from dotenv import load_dotenv
 from yaml.loader import Loader
-
+import urllib
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 env = os.getenv("FLASK_ENV") or "dev"
@@ -38,9 +38,11 @@ def serialize(cls):
         if not callable(getattr(cls, attr)) and not attr.startswith("__")
     }
 
+password = os.environ['PASSWORD']
+encoded_password = urllib.parse.quote_plus(password)
 
 class Config:
-    SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URL")
+    SQLALCHEMY_DATABASE_URI = f"mysql+mysqlconnector://{os.environ['USERNAME']}:{encoded_password}@{os.environ['HOST']}/{os.environ['DB']}"
     SECRET_KEY = os.environ.get("SECRET_KEY")
     PROPAGATE_EXCEPTIONS = config.get("PROPAGATE_EXCEPTIONS")
 

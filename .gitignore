@@ -2,6 +2,7 @@
 /shelf/
 **xml
 */venv/*
+venv
 /logs/
 /instance/
 *.pyc
@@ -15,3 +16,4 @@
 .vscode
 __pycache__/
 .pytest_cache/
+.env
