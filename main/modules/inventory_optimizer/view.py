@@ -80,10 +80,12 @@ class InventoryUploadApi(Resource):
         return response
 
 
-algorithm_mock_namespace = Namespace("", description="Mock Api for Algorithm")
+algorithm_mock_namespace = Namespace(
+    "optimization-api", description="Mock Api for Algorithm"
+)
 algorithm_mock_namespace.add_resource(AlgorithmMockApi, "/mock/algorithm")
 
 inventory_namespace = Namespace(
-    "inventory", description="Inventory Operations"
+    "optimization-api/inventory", description="Inventory Operations"
 )
 inventory_namespace.add_resource(InventoryUploadApi, "/upload")

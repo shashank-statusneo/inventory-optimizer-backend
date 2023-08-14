@@ -217,7 +217,9 @@ class DemandFile(Resource):
         return make_response(jsonify(status="success"), 201)
 
 
-wmp_namespace = Namespace("wmp", description="Address Operations")
+wmp_namespace = Namespace(
+    "optimization-api/wmp", description="Address Operations"
+)
 wmp_namespace.add_resource(Warehouses, "/warehouses")
 wmp_namespace.add_resource(
     WarehouseBenchmarkProductivity,

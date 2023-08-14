@@ -137,7 +137,9 @@ class RouteUploadApi(Resource):
         return response
 
 
-route_namespace = Namespace("route", description="Route Operations")
+route_namespace = Namespace(
+    "optimization-api/route", description="Route Operations"
+)
 route_namespace.add_resource(AlgorithmMockApi, "/mock/algorithm")
 route_namespace.add_resource(
     AlgorithmMockApi, "/mock/algorithm/<int:result_id>"
