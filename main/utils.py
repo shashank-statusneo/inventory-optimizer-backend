@@ -269,7 +269,9 @@ def get_query_including_filters(
 
 
 def csv_to_dict(csv_file):
-    csv_data = pd.read_csv(csv_file, engine="python").to_json(orient="records")
+    csv_data = pd.read_csv(csv_file, encoding="utf-8").to_json(
+        orient="records"
+    )
 
     return loads(csv_data)
 
