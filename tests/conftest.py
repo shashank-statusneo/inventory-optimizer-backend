@@ -13,7 +13,7 @@ def app():
     On teardown, it drops the tables.
     :return:
     """
-    app = get_app("test")
+    app = get_app(env="test")
     with app.app_context():
         db.create_all()
 

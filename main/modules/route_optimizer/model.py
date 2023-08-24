@@ -8,7 +8,7 @@ class RouteMasterData(BaseModel):
     """
 
     __table_name = "route_master_data"
-    file_name = db.Column(db.String(100), nullable=False)
+    file_name = db.Column(db.String(200), nullable=False)
     file_type = db.Column(db.String(50), nullable=False)
     file_ext = db.Column(db.String(50))
     file_object = db.Column(BLOB)

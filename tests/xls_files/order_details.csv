@@ -1,0 +1,2 @@
+order_id,destination,order_weight,order_volume,delivery_slot_start_time,delivery_slot_end_time,special_vehicle_requirements
+ORD123,DELHI,10,20,28/05/23 12:00,28/05/24 12:00,heavy

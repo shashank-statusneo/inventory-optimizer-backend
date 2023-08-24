@@ -1,0 +1,2 @@
+vehicle_type,vehicle_count,fixed_cost,variable_cost_per_km,capacity_kg,avg_speed_kmph,characteristics
+truck,10,1055.5,5,500,60,heavy

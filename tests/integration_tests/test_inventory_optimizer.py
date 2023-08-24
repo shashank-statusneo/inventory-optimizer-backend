@@ -6,7 +6,7 @@ def test_upload_master_data(client):
         "integration_tests", "xls_files"
     )
     # Without any file.
-    response = client.post("/inventory/upload")
+    response = client.post("/optimization-api/inventory/upload")
     assert response.status_code == 400
     assert response.json == {
         "error": "{'file_type': ['Missing data for required field.']}"
@@ -19,7 +19,9 @@ def test_upload_master_data(client):
             "file_type": "demand_forecast",
             "user_id": 1,
         }
-        response = client.post("/inventory/upload", data=form_data)
+        response = client.post(
+            "/optimization-api/inventory/upload", data=form_data
+        )
     assert response.status_code == 201
 
     # Valid vendor File
@@ -29,10 +31,12 @@ def test_upload_master_data(client):
             "file_type": "vendor",
             "user_id": 1,
         }
-        response = client.post("/inventory/upload", data=form_data)
+        response = client.post(
+            "/optimization-api/inventory/upload", data=form_data
+        )
     assert response.status_code == 201
 
 
 def test_mock_algorithm_data(client):
-    response = client.post("/mock/algorithm")
+    response = client.post("/optimization-api/mock/algorithm")
     assert response.status_code == 200

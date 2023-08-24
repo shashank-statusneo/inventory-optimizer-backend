@@ -1,0 +1,4 @@
+start_node,end_node,distance,time
+DEPOT,DEPOT,0,0
+DEPOT,AE4577,548,6
+DEPOT,AE1714,776,9
